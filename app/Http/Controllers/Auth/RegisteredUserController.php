@@ -40,9 +40,9 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-        ]); 
+        ]);
 
-        $user->attachRole('user');
+        $user->addRole('user'); // Cette ligne ajoute le role user à l'utilisateur que tu as crée
 
         event(new Registered($user));
 
