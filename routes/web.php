@@ -7,6 +7,8 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\OrdersController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SubCategoryController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\User\ClientController;
 use App\Http\Controllers\User\HomeController;
 use App\Models\Role;
@@ -33,6 +35,7 @@ Route::controller(RegisteredUserController::class)->group(function(){
 
 Route::controller(AuthenticatedSessionController::class)->group(function(){
     Route::get('/login', 'create')->name('login')->name('login');
+    Route::get('/logout', 'destroy')->name('logout')->name('logout');
 });
 
 Route::controller(ClientController::class)->group(function(){
@@ -51,7 +54,9 @@ Route::controller(ClientController::class)->group(function(){
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard'); 
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+
 
 Route::controller(DashboardController::class)->group(function(){
     Route::get('/admin/dashboard', 'index')->name('admindashboard');
@@ -78,7 +83,7 @@ Route::controller(SubCategoryController::class)->group(function(){
 Route::controller(ProductController::class)->group(function(){
     Route::get('/admin/all-product', 'index')->name('allproduct');
     Route::get('/admin/add-product', 'AddProduct')->name('addproduct');
-    Route::post('/admin/store-product', 'StoreProduct')->name('storeproduct');        
+    Route::post('/admin/store-product', 'StoreProduct')->name('storeproduct');
     Route::get('/admin/edit-product-img/{id}', 'EditProductImg')->name('editproductimg');
     Route::post('/admin/update-product-img', 'UpdateProductImg')->name('updateproductimg');
     Route::get('/admin/edit-product/{id}', 'EditProduct')->name('editproduct');

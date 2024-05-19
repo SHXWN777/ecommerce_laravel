@@ -10,7 +10,7 @@
     <meta name="keywords" content="Ashion, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Ecommerce</title> 
+    <title>Ecommerce</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
@@ -67,10 +67,10 @@
                         <a href="./index.html"><img src="{{ asset('home/img/logo.png') }}" alt=""></a>
                     </div>
                 </div>
-                <div class="col-xl-6 col-lg-7">
+                <div class="col-xl-4 col-lg-7">
                     <nav class="header__menu">
                         <ul>
-                            
+
                             <li class="active"><a href="{{ route('Home') }}">Home</a></li>
                             {{-- <li><a href="#">Women’s</a></li>
                             <li><a href="#">Men’s</a></li> --}}
@@ -88,12 +88,37 @@
                         </ul>
                     </nav>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-4">
                     <div class="header__right">
+
+
                         <div class="header__right__auth">
+                                    @auth()
+                                    <a href="#"> Bienvenue {{Auth::user()->name}}</a>
+
+                                    @endauth
+
+
+                                    @auth
+
+                                        <a href="{{ url('/admin/dashboard') }}">Dashboard</a>
+                                        <a href="{{ url('/logout') }}">Logout</a>
+                                        @else
+                                        <a href="{{ route('login') }}">Login</a>
+
+                                        @if (Route::has('register'))
+                                        <a href="{{ route('register') }}">Register</a>
+                                        @endif
+                                    @endauth
+
+
+
+                            {{-- {{Auth::user()->name}}
                             <a href="{{ route('login') }}">Login</a>
-                            <a href="{{ route('register') }}">Register</a>
+                            <a href="{{ route('register') }}">Register</a> --}}
                         </div>
+
+
                         <ul class="header__right__widget">
                             <li><span class="icon_search search-switch"></span></li>
                             <li><a href="#"><span class="icon_heart_alt"></span>
@@ -185,11 +210,11 @@
             <div class="col-lg-8 col-md-8">
                 <ul class="filter__controls">
                     <li class="active" data-filter="*">All</li>
-                    
+
                     @foreach ($categories as $category)
-                        <li data-filter=".women">{{ $category->category_name }}</li>        
+                        <li data-filter=".women">{{ $category->category_name }}</li>
                     @endforeach
-                    
+
                 </ul>
             </div>
         </div>
