@@ -35,6 +35,7 @@ Route::controller(RegisteredUserController::class)->group(function(){
 
 Route::controller(AuthenticatedSessionController::class)->group(function(){
     Route::get('/login', 'create')->name('login')->name('login');
+    Route::get('/logout', 'destroy')->name('logout')->name('logout');
 });
 
 Route::controller(ClientController::class)->group(function(){
@@ -54,6 +55,8 @@ Route::controller(ClientController::class)->group(function(){
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+
 
 Route::controller(DashboardController::class)->group(function(){
     Route::get('/admin/dashboard', 'index')->name('admindashboard');
