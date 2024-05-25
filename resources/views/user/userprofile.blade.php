@@ -51,10 +51,12 @@
             <a href="./index.html"><img src="{{asset('home/img/logo.png')}}" alt=""></a>
         </div>
         <div id="mobile-menu-wrap"></div>
+        @auth
         <div class="offcanvas__auth">
             <a href="#">Login</a>
             <a href="#">Register</a>
         </div>
+        @endauth
     </div>
     <!-- Offcanvas Menu End -->
 
@@ -64,26 +66,15 @@
             <div class="row">
                 <div class="col-xl-3 col-lg-2">
                     <div class="header__logo">
-                        <a href="./index.html"><img src="{{ asset('home/img/logo.png') }}" alt=""></a>
+                        <a href="{{ route('Home') }}"><img src="{{ asset('home/img/logo.png') }}" alt=""></a>
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-7">
                     <nav class="header__menu">
                         <ul>
-                            
-                            <li class="active"><a href="{{ route('Home') }}">Home</a></li>
-                            {{-- <li><a href="#">Women’s</a></li>
-                            <li><a href="#">Men’s</a></li> --}}
-                            <li><a href="{{ route('category') }}">Shop</a></li>
-                            <li><a href="#">Pages</a>
-                                <ul class="dropdown">
-                                    {{-- <li><a href="{{ route('singleproduct') }}">Product Details</a></li> --}}
-                                    <li><a href="{{ route('addtocart') }}">Cart</a></li>
-                                    <li><a href="{{ route('checkout') }}">Checkout</a></li>
-                                    {{-- <li><a href="./blog-details.html">Blog Details</a></li> --}}
-                                </ul>
-                            </li>
-                            {{-- <li><a href="./blog.html">Blog</a></li> --}}
+                            <li><a href="{{ route('userprofile') }}">Dashboard</a></li>
+                            <li><a href="{{ route('pendingorders') }}">Pending Orders</a></li>
+                            <li><a href="{{ route('history') }}">History</a></li>
                             <li><a href="./contact.html">Contact</a></li>
                         </ul>
                     </nav>
@@ -91,8 +82,27 @@
                 <div class="col-lg-3">
                     <div class="header__right">
                         <div class="header__right__auth">
-                            <a href="#">Login</a>
-                            <a href="#">Register</a>
+                            @auth()
+                            <a href="#"> Bienvenue {{Auth::user()->name}}</a>
+
+                            @endauth
+
+                            @auth
+                                
+                                <!-- <a href="{{ route('logout') }}" method="POST">Logout</a> -->                                     
+                                @else
+                                <a href="{{ route('login') }}">Login</a>
+
+                                @if (Route::has('register'))
+                                <a href="{{ route('register') }}">Register</a>
+                                @endif
+                            @endauth
+
+
+
+                    {{-- {{Auth::user()->name}}
+                    <a href="{{ route('login') }}">Login</a>
+                    <a href="{{ route('register') }}">Register</a> --}}
                         </div>
                         <ul class="header__right__widget">
                             <li><span class="icon_search search-switch"></span></li>
@@ -103,6 +113,15 @@
                                 <div class="tip">2</div>
                             </a></li>
                         </ul>
+
+                        @auth()
+                        <div class="header_right_button"> <ul>
+                            <form action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                <button type="submit">Logout</button>
+                             </form> </ul></div>
+                        @endauth
+                        
                     </div>
                 </div>
             </div>
@@ -129,23 +148,7 @@
 
 <!-- User profile -->
 <section>
-    <div class="container" >
-        <div class="row" >
-            <div class="box_main" >
-                <ul>
-                    <li><a href="{{ route('userprofile') }}">Dashboard</a></li>
-                    <li><a href="{{ route('pendingorders') }}">Pending Orders</a></li>
-                    <li><a href="{{ route('history') }}">History</a></li>
-                    <li><a href="">Logout</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="col-lg-8" >
-           <div class="box_main" >
-
-           </div>
-        </div>
-    </div>
+    <div><h2>Dashboard</h2></div>
 </section>
 <!-- User profile end -->
 

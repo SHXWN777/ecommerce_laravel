@@ -150,7 +150,7 @@
 
 <!-- User profile -->
 <section>
-  <div><h2>Pending orders</h2></div>
+    <div><h2>Dashboard</h2></div>
 </section>
 <!-- User profile end -->
 

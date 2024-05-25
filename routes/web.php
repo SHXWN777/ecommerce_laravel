@@ -34,32 +34,41 @@ Route::controller(RegisteredUserController::class)->group(function(){
 });
 
 Route::controller(AuthenticatedSessionController::class)->group(function(){
-    Route::get('/login', 'create')->name('login')->name('login');
-    Route::get('/logout', 'destroy')->name('logout')->name('logout');
+    Route::get('/login', 'create')->name('login');
+    Route::post('/logout', 'destroy')->name('logout');
 });
 
 Route::controller(ClientController::class)->group(function(){
     Route::get('/user/category', 'CategoryPage')->name('category');
     Route::get('/user/product-details/{id}', 'SingleProduct')->name('singleproduct');
-    Route::get('/user/add-to-cart', 'AddToCart')->name('addtocart');
-    Route::post('/user/add-product-to-cart/{id}', 'AddProductToCart')->name('addproducttocart');
-    Route::get('/user/checkout', 'Checkout')->name('checkout');
-    Route::get('/user/user-profile', 'UserProfile')->name('userprofile');
-    Route::get('/user/user-profile/pending-orders', 'PendingOrders')->name('pendingorders');
-    Route::get('/user/user-profile/history', 'History')->name('history');
     Route::get('/user/new-release', 'NewRelease')->name('newrelease');
     Route::get('/user/todays-deal', 'TodaysDeal')->name('todaysdeal');
     Route::get('/user/custom-service', 'CustomerService')->name('customerservice');
 });
 
+Route::middleware(['auth', 'role:user'])->group(function(){
+    Route::controller(ClientController::class)->group(function(){
+        Route::get('/user/add-to-cart', 'AddToCart')->name('addtocart');
+        Route::post('/user/add-product-to-cart/{id}', 'AddProductToCart')->name('addproducttocart');
+        Route::get('/user/checkout', 'Checkout')->name('checkout');
+        Route::get('/user/user-profile', 'UserProfile')->name('userprofile');
+        Route::get('/user/user-profile/pending-orders', 'PendingOrders')->name('pendingorders');
+        Route::get('/user/user-profile/history', 'History')->name('history');
+        Route::get('/user/todays-deal', 'TodaysDeal')->name('todaysdeal');
+        Route::get('/user/custom-service', 'CustomerService')->name('customerservice');
+    });
+    
+});
+
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'role:user'])->name('dashboard');
 
 
-
-Route::controller(DashboardController::class)->group(function(){
-    Route::get('/admin/dashboard', 'index')->name('admindashboard');
+Route::middleware(['auth', 'role:admin'])->group(function(){
+    Route::controller(DashboardController::class)->group(function(){
+        Route::get('/admin/dashboard', 'index')->name('admindashboard');
+    });    
 });
 
 Route::controller(CategoryController::class)->group(function(){

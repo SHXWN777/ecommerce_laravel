@@ -84,6 +84,7 @@
                                 </ul>
                             </li>
                             {{-- <li><a href="./blog.html">Blog</a></li> --}}
+                            <li><a href="{{ route('userprofile') }}">User profile</a></li>
                             <li><a href="./contact.html">Contact</a></li>
                         </ul>
                     </nav>
@@ -98,11 +99,9 @@
 
                                     @endauth
 
-
                                     @auth
-
-                                        <a href="{{ url('/admin/dashboard') }}">Dashboard</a>
-                                        <a href="{{ url('/logout') }}">Logout</a>
+                                        
+                                        <!-- <a href="{{ route('logout') }}" method="POST">Logout</a> -->                                     
                                         @else
                                         <a href="{{ route('login') }}">Login</a>
 
@@ -127,9 +126,22 @@
                             <li><a href="#"><span class="icon_bag_alt"></span>
                                 <div class="tip">2</div>
                             </a></li>
+                             
                         </ul>
+
+                        @auth()
+                        <div class="header_right_button"> <ul>
+                            <form action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                <button type="submit">Logout</button>
+                             </form> </ul></div>
+                        @endauth
+                            
                     </div>
+                    
+                    
                 </div>
+                    
             </div>
             <div class="canvas__open">
                 <i class="fa fa-bars"></i>

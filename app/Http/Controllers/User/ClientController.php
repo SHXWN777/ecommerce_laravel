@@ -7,6 +7,7 @@ use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
 {
@@ -38,10 +39,11 @@ class ClientController extends Controller
         $price = $product_price * $quantity;  
         Cart::insert([
             'product_id' => $request->product_id,
-            //'user_id' =>
+            'user_id' => Auth::id(),
             'quantity' => $request->quantity,
             'price' => $price
         ]);
+        
         return redirect()->route('addtocart')->with('message', 'Your item added to cart successfully!');
     }
 

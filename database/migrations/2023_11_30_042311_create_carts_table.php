@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('product_id');
             $table->string('product_img_cart');
-            //$table->integer('user_id');
+            $table->integer('user_id');
             $table->integer('quantity')->default(1);
             $table->integer('price_total');
             $table->timestamps();

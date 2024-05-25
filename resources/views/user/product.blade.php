@@ -80,16 +80,29 @@
                                 </ul>
                             </li>
                             {{-- <li><a href="./blog.html">Blog</a></li> --}}
+                            <li><a href="{{ route('userprofile') }}">User profile</a></li>
                             <li><a href="./contact.html">Contact</a></li>
                         </ul>
                     </nav>
                 </div>
                 <div class="col-lg-3">
                     <div class="header__right">
-                        <div class="header__right__auth">
-                            <a href="#">Login</a>
-                            <a href="#">Register</a>
-                        </div>
+                        @auth()
+                            <a href="#"> Bienvenue {{Auth::user()->name}}</a>
+
+                            @endauth
+
+                            @auth
+                                
+                                <!-- <a href="{{ route('logout') }}" method="POST">Logout</a> -->                                     
+                                @else
+                                <a href="{{ route('login') }}">Login</a>
+
+                                @if (Route::has('register'))
+                                <a href="{{ route('register') }}">Register</a>
+                                @endif
+                            @endauth
+
                         <ul class="header__right__widget">
                             <li><span class="icon_search search-switch"></span></li>
                             <li><a href="#"><span class="icon_heart_alt"></span>
@@ -99,6 +112,15 @@
                                 <div class="tip">2</div>
                             </a></li>
                         </ul>
+
+                        @auth()
+                        <div class="header_right_button"> <ul>
+                            <form action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                <button type="submit">Logout</button>
+                             </form> </ul></div>
+                        @endauth
+                        
                     </div>
                 </div>
             </div>

@@ -12,4 +12,5 @@ class HomeController extends Controller
         $allproducts = Product::latest()->get();
         return view('user.home', compact('allproducts'));
     }
+    
 }
