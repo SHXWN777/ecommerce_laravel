@@ -95,13 +95,14 @@
 
                         <div class="header__right__auth">
                                     @auth()
+
                                     <a href="#"> Bienvenue {{Auth::user()->name}}</a>
 
                                     @endauth
 
                                     @auth
-                                        
-                                        <!-- <a href="{{ route('logout') }}" method="POST">Logout</a> -->                                     
+
+                                        <!-- <a href="{{ route('logout') }}" method="POST">Logout</a> -->
                                         @else
                                         <a href="{{ route('login') }}">Login</a>
 
@@ -126,7 +127,7 @@
                             <li><a href="#"><span class="icon_bag_alt"></span>
                                 <div class="tip">2</div>
                             </a></li>
-                             
+
                         </ul>
 
                         @auth()
@@ -136,12 +137,12 @@
                                 <button type="submit">Logout</button>
                              </form> </ul></div>
                         @endauth
-                            
+
                     </div>
-                    
-                    
+
+
                 </div>
-                    
+
             </div>
             <div class="canvas__open">
                 <i class="fa fa-bars"></i>
