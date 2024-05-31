@@ -25,25 +25,33 @@ class ClientController extends Controller
     }
 
     public function AddToCart(){
-        //$userid = Auth::id();
-        //$cart_items = Cart::where('user_id', $userid)->get();
-        
+
+
+        $userid = Auth::user()->id;
+        $cart_total = 0;
+        $cart_items = Cart::where('user_id', $userid)->get();
         //$cart_items = Cart::where('product_id')->get();
-        
-        return view('user.addtocart'); //compact(cart_items)
+        foreach ($cart_items as $cart) {
+            $cart_total+= $cart->price_total;
+        }
+
+
+
+        return view('user.addtocart', compact('cart_items','cart_total'));
     }
 
     public function AddProductToCart(Request $request){
+
         $product_price = $request->price;
-        $quantity = $request->quantity; 
-        $price = $product_price * $quantity;  
+        $quantity = $request->quantity;
+        $price = $product_price * $quantity;
         Cart::insert([
             'product_id' => $request->product_id,
-            'user_id' => Auth::id(),
+            'user_id' => Auth::user()->id,
             'quantity' => $request->quantity,
-            'price' => $price
+            'price_total' => $price
         ]);
-        
+
         return redirect()->route('addtocart')->with('message', 'Your item added to cart successfully!');
     }
 

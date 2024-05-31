@@ -46,7 +46,7 @@ Route::controller(ClientController::class)->group(function(){
     Route::get('/user/custom-service', 'CustomerService')->name('customerservice');
 });
 
-Route::middleware(['auth', 'role:user'])->group(function(){
+Route::middleware(['auth', 'ensureRole:user'])->group(function(){
     Route::controller(ClientController::class)->group(function(){
         Route::get('/user/add-to-cart', 'AddToCart')->name('addtocart');
         Route::post('/user/add-product-to-cart/{id}', 'AddProductToCart')->name('addproducttocart');
@@ -57,7 +57,7 @@ Route::middleware(['auth', 'role:user'])->group(function(){
         Route::get('/user/todays-deal', 'TodaysDeal')->name('todaysdeal');
         Route::get('/user/custom-service', 'CustomerService')->name('customerservice');
     });
-    
+
 });
 
 Route::get('/dashboard', function () {
@@ -68,7 +68,7 @@ Route::get('/dashboard', function () {
 Route::middleware(['auth', 'role:admin'])->group(function(){
     Route::controller(DashboardController::class)->group(function(){
         Route::get('/admin/dashboard', 'index')->name('admindashboard');
-    });    
+    });
 });
 
 Route::controller(CategoryController::class)->group(function(){
