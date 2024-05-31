@@ -96,8 +96,8 @@
                                     @endauth
 
                                     @auth
-                                        
-                                        <!-- <a href="{{ route('logout') }}" method="POST">Logout</a> -->                                     
+
+                                        <!-- <a href="{{ route('logout') }}" method="POST">Logout</a> -->
                                         @else
                                         <a href="{{ route('login') }}">Login</a>
 
@@ -126,7 +126,7 @@
                                 <button type="submit">Logout</button>
                              </form> </ul></div>
                         @endauth
-                       
+
                     </div>
                 </div>
             </div>
@@ -174,36 +174,37 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @foreach ($cart_items as $item)
+                                @foreach ($cart_items as $item)
                                 <tr>
                                     @php
-                                       $product_name = App\Models\Product::where('id', $item->product_id)->value('product_name');
-                                       $product_img = App\Models\Product::where('id', $item->product_id)->value('product_img');
-                                       $product_price = App\Models\Product::where('id', $item->product_id)->value('price');
+                                    // name du produit et image du produit
+                                       $product_name = App\Models\Product::where('id', $item->product_id)->first();
+
+
                                     @endphp
                                     <td class="cart__product__item">
-                                        <img src="{{ asset($item->product_img) }}" style="height: 50px" alt="">
+                                        <img src="{{ asset($product_name->product_img) }}" style="height: 50px" alt="">
                                         <div class="cart__product__item__title">
-                                            <h6>{{ $item->product_name }}</h6>
-                                            <div class="rating">
+                                            <h6>{{ $product_name->product_name }}</h6>
+                                            {{-- <div class="rating">
                                                 <i class="fa fa-star"></i>
                                                 <i class="fa fa-star"></i>
                                                 <i class="fa fa-star"></i>
                                                 <i class="fa fa-star"></i>
                                                 <i class="fa fa-star"></i>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </td>
-                                    <td class="cart__price">$ {{ $item->product_price }}</td>
+                                    <td class="cart__price">$ {{ $product_name->price }}</td>
                                     <td class="cart__quantity">
                                         <div class="pro-qty">
-                                            <input type="text" value="1">
+                                            <input type="text" value="{{$item->quantity}}">
                                         </div>
                                     </td>
-                                    <td class="cart__total">$ {{ $item->price }}</td>
+                                    <td class="cart__total">$ {{ $item->price_total }}</td>
                                     <td class="cart__close"><span class="icon_close"></span></td>
                                 </tr>
-                                @endforeach --}}
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -235,8 +236,8 @@
                     <div class="cart__total__procced">
                         <h6>Cart total</h6>
                         <ul>
-                            <li>Subtotal <span>$ 750.0</span></li>
-                            <li>Total <span>$ 750.0</span></li>
+                            <li>Subtotal <span>$ {{$cart_total}}</span></li>
+                            <li>Total <span>$ {{ $cart_total}}</span></li>
                         </ul>
                         <a href="#" class="primary-btn">Proceed to checkout</a>
                     </div>
